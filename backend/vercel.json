@@ -1,0 +1,1 @@
+{"builds":[{"src":"dist/server.js","use":"@vercel/node"}],"routes":[{"dest":"dist/server.js","src":"/(.*)"}],"version":2}
