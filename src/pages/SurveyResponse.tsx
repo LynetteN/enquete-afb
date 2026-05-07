@@ -82,11 +82,11 @@ export const SurveyResponse = () => {
         const sessionToken = isAdmin ? getAdminSessionToken() : getSessionToken();
 
         saveResponse({
-            surveyId: survey.title,
+            survey_id: survey.id || survey.title, // Use survey.id if available, fallback to title
             timestamp: new Date().toISOString(),
             answers: answers,
-            sessionToken: sessionToken,
-            isAdmin: isAdmin
+            session_token: sessionToken,
+            is_admin: isAdmin
         });
         setSubmitted(true);
     };

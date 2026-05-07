@@ -60,12 +60,13 @@ export const getAllSurveys = async () => {
 export const saveResponse = async (response: any) => {
   try {
     // Use appropriate session token based on user type
-    const isAdmin = response.isAdmin || isAdminSession();
+    const isAdmin = response.is_admin || isAdminSession();
     const sessionToken = isAdmin ? getAdminSessionToken() : getSessionToken();
 
     const responseWithToken = {
-      ...response,
+      survey_id: response.survey_id, // Ensure survey_id is included
       session_token: sessionToken,
+      answers: response.answers,
       timestamp: response.timestamp || new Date().toISOString(),
       is_admin: isAdmin
     };

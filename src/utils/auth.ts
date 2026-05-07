@@ -11,8 +11,8 @@ const LOGIN_ATTEMPTS_KEY = 'login_attempts';
 const LOCKOUT_TIME_KEY = 'lockout_time';
 
 // Rate limiting configuration
-const MAX_LOGIN_ATTEMPTS = 3;
-const LOCKOUT_DURATION = 15 * 60 * 1000; // 15 minutes in milliseconds
+const MAX_LOGIN_ATTEMPTS = 5;
+const LOCKOUT_DURATION = 30 * 1000; // 30 seconds in milliseconds
 
 export interface AdminUser {
   id: string;
@@ -131,7 +131,7 @@ export const login = async (username: string, password: string): Promise<{ succe
         success: false,
         message: remainingAttempts > 0
           ? `Identifiants incorrects. ${remainingAttempts} tentative(s) restante(s).`
-          : 'Trop de tentatives. Compte verrouillé pour 15 minutes.'
+          : 'Trop de tentatives. Compte verrouillé pour 30 secondes.'
       };
     }
   } catch (error) {
@@ -144,7 +144,7 @@ export const login = async (username: string, password: string): Promise<{ succe
       success: false,
       message: remainingAttempts > 0
         ? `Erreur de connexion. ${remainingAttempts} tentative(s) restante(s).`
-        : 'Trop de tentatives. Compte verrouillé pour 15 minutes.'
+        : 'Trop de tentatives. Compte verrouillé pour 30 secondes.'
     };
   }
 };

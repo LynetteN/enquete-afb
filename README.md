@@ -54,12 +54,41 @@ npm run build
 npm run preview
 ```
 
-## 🌐 Netlify Deployment
+## 🌐 Deployment Options
 
-### Automatic Deployment
+### Option 1: Netlify Functions (Recommended - One-Page Deploy)
+
+This option provides true one-page deployment with serverless functions and cloud database.
+
+**Quick Start:**
+```bash
+# Run the setup script
+setup-netlify.bat
+
+# Or manually:
+npm install -g netlify-cli
+cd netlify && npm install && cd ..
+npm run build
+netlify login
+netlify init
+netlify deploy --prod
+```
+
+**Requirements:**
+- Cloud PostgreSQL database (Supabase, Neon, or Railway)
+- Netlify account (free)
+- Set `DATABASE_URL` and `JWT_SECRET` in Netlify environment variables
+
+**Detailed Guide:** See [NETLIFY_DEPLOYMENT.md](NETLIFY_DEPLOYMENT.md)
+
+### Option 2: Traditional Netlify Deployment (Frontend Only)
+
+For frontend-only deployment with separate backend server.
+
+#### Automatic Deployment
 
 1. **Push to GitHub**: Push your code to a GitHub repository
-2. **Connect to Netlify**: 
+2. **Connect to Netlify**:
    - Go to [Netlify](https://app.netlify.com)
    - Click "Add new site" → "Import an existing project"
    - Connect your GitHub repository
@@ -68,7 +97,7 @@ npm run preview
    - Publish directory: `dist`
    - Node version: `18`
 
-### Manual Deployment
+#### Manual Deployment
 
 ```bash
 # Build the application
@@ -81,6 +110,21 @@ netlify deploy --prod --dir=dist
 
 ### Environment Variables
 
+#### For Netlify Functions Deployment:
+Configure these in Netlify dashboard under Site Settings → Environment Variables:
+
+```bash
+# Database Connection (Required)
+DATABASE_URL=postgresql://user:password@host:port/database
+
+# JWT Secret (Required - use strong random string)
+JWT_SECRET=your_super_secret_jwt_key_change_this_in_production
+
+# Node Version
+NODE_VERSION=18
+```
+
+#### For Traditional Frontend-Only Deployment:
 Configure these in Netlify dashboard under Site Settings → Environment Variables:
 
 ```bash
@@ -125,7 +169,13 @@ enquete-test/
 │   ├── config/         # Configuration files
 │   └── assets/         # Static assets
 ├── public/             # Public static files
-├── backend/           # Backend API (if applicable)
+├── backend/           # Backend API (for local development)
+├── netlify/
+│   ├── functions/      # Netlify serverless functions
+│   │   ├── admin.js   # Admin API endpoints
+│   │   ├── surveys.js # Survey API endpoints
+│   │   └── responses.js # Response API endpoints
+│   └── package.json   # Function dependencies
 ├── dist/              # Build output (generated)
 ├── netlify.toml       # Netlify configuration
 ├── package.json       # Project dependencies

@@ -1,7 +1,7 @@
 // API Client for Backend Communication
-// This handles all HTTP requests to the Node.js/PostgreSQL backend
+// This handles all HTTP requests to Netlify Functions
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/.netlify/functions';
 
 class ApiClient {
   private baseUrl: string;

@@ -15,7 +15,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onSuccess, onCancel }) =
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [lockoutTime, setLockoutTime] = useState(0);
-  const [remainingAttempts, setRemainingAttempts] = useState(3);
+  const [remainingAttempts, setRemainingAttempts] = useState(5);
 
   useEffect(() => {
     // Update lockout time every second
