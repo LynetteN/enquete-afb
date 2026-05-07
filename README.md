@@ -1,6 +1,6 @@
 # Afriland First Bank - Employee Engagement Survey
 
-A modern, responsive employee engagement survey application built with React, TypeScript, and Vite. Features real-time analytics, anonymous data collection, and comprehensive reporting capabilities.
+A modern, responsive employee engagement survey application built with React, TypeScript, and Node.js. Features real-time analytics, anonymous data collection, and comprehensive reporting capabilities.
 
 ## 🚀 Features
 
@@ -11,20 +11,33 @@ A modern, responsive employee engagement survey application built with React, Ty
 - **Authentication**: Secure admin access for data management
 - **Offline Support**: Graceful degradation when network is unavailable
 - **TypeScript**: Full type safety for better development experience
+- **RESTful API**: Complete backend with PostgreSQL database
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: React 18, TypeScript, Vite
-- **Styling**: Tailwind CSS, Framer Motion
-- **Icons**: Lucide React
-- **Routing**: React Router DOM
-- **Build**: Vite with single-file output plugin
+### Frontend
+- **React 18**: Modern UI framework
+- **TypeScript**: Type-safe development
+- **Vite**: Fast build tool and dev server
+- **Tailwind CSS**: Utility-first styling
+- **Framer Motion**: Smooth animations
+- **Lucide React**: Beautiful icons
+- **React Router DOM**: Client-side routing
+
+### Backend
+- **Node.js**: Runtime environment
+- **Express**: Web framework
+- **TypeScript**: Type-safe API development
+- **PostgreSQL**: Relational database
+- **JWT**: Authentication
+- **Bcrypt**: Password hashing
 
 ## 📋 Prerequisites
 
 - Node.js 18+ 
+- PostgreSQL 12+
 - npm or yarn
-- Git
+- Git (optional)
 
 ## 🏗️ Local Development
 
@@ -33,163 +46,189 @@ A modern, responsive employee engagement survey application built with React, Ty
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd enquete-test
+cd "enquete test"
 
-# Install dependencies
+# Install backend dependencies
+cd backend
 npm install
 
-# Start development server
-npm run dev
+# Install frontend dependencies
+cd ..
+npm install
 ```
 
-The application will be available at `http://localhost:3000`
+### Database Setup
 
-### Build for Production
+1. **Install PostgreSQL** if not already installed
+2. **Start PostgreSQL service**
+3. **Create the database**:
+   ```bash
+   # Using psql command line
+   psql -U postgres
+   CREATE DATABASE enquete_db;
+   \q
+   ```
 
-```bash
-# Build the application
-npm run build
+### Backend Configuration
 
-# Preview production build
-npm run preview
-```
+1. **Navigate to backend directory**:
+   ```bash
+   cd backend
+   ```
 
-## 🌐 Deployment Options
+2. **Configure environment variables**:
+   ```bash
+   # Create .env file
+   copy .env.example .env
+   ```
 
-### Option 1: Netlify Functions (Recommended - One-Page Deploy)
+   Update `.env` with your database credentials:
+   ```env
+   DB_HOST=localhost
+   DB_PORT=5432
+   DB_NAME=enquete_db
+   DB_USER=postgres
+   DB_PASSWORD=your_actual_password
+   PORT=3001
+   JWT_SECRET=change_this_to_a_secure_random_string
+   ```
 
-This option provides true one-page deployment with serverless functions and cloud database.
+3. **Run database migrations**:
+   ```bash
+   npm run migrate
+   ```
 
-**Quick Start:**
-```bash
-# Run the setup script
-setup-netlify.bat
+4. **Seed the database** (creates default admin account):
+   ```bash
+   npm run seed
+   ```
 
-# Or manually:
-npm install -g netlify-cli
-cd netlify && npm install && cd ..
-npm run build
-netlify login
-netlify init
-netlify deploy --prod
-```
+5. **Start the backend server**:
+   ```bash
+   npm run dev
+   ```
 
-**Requirements:**
-- Cloud PostgreSQL database (Supabase, Neon, or Railway)
-- Netlify account (free)
-- Set `DATABASE_URL` and `JWT_SECRET` in Netlify environment variables
+   The backend will run at `http://localhost:3001`
 
-**Detailed Guide:** See [NETLIFY_DEPLOYMENT.md](NETLIFY_DEPLOYMENT.md)
+### Frontend Configuration
 
-### Option 2: Traditional Netlify Deployment (Frontend Only)
+1. **Navigate to project root**:
+   ```bash
+   cd ..
+   ```
 
-For frontend-only deployment with separate backend server.
+2. **Configure environment variables**:
+   Create `.env` file with:
+   ```env
+   VITE_API_URL=http://localhost:3001/api
+   ```
 
-#### Automatic Deployment
+3. **Start the frontend development server**:
+   ```bash
+   npm run dev
+   ```
 
-1. **Push to GitHub**: Push your code to a GitHub repository
-2. **Connect to Netlify**:
-   - Go to [Netlify](https://app.netlify.com)
-   - Click "Add new site" → "Import an existing project"
-   - Connect your GitHub repository
-3. **Configure Build Settings**:
-   - Build command: `npm run build`
-   - Publish directory: `dist`
-   - Node version: `18`
+   The frontend will run at `http://localhost:5173`
 
-#### Manual Deployment
+## 🔐 Default Credentials
 
-```bash
-# Build the application
-npm run build
+After completing the setup, you can log in with the default admin account:
 
-# Deploy to Netlify using CLI
-npm install -g netlify-cli
-netlify deploy --prod --dir=dist
-```
+- **Username**: `admin`
+- **Password**: `afriland2026`
 
-### Environment Variables
-
-#### For Netlify Functions Deployment:
-Configure these in Netlify dashboard under Site Settings → Environment Variables:
-
-```bash
-# Database Connection (Required)
-DATABASE_URL=postgresql://user:password@host:port/database
-
-# JWT Secret (Required - use strong random string)
-JWT_SECRET=your_super_secret_jwt_key_change_this_in_production
-
-# Node Version
-NODE_VERSION=18
-```
-
-#### For Traditional Frontend-Only Deployment:
-Configure these in Netlify dashboard under Site Settings → Environment Variables:
-
-```bash
-# Application Mode
-VITE_APP_MODE=production
-
-# Feature Flags
-VITE_ENABLE_OFFLINE_MODE=true
-VITE_ENABLE_DIAGNOSTICS=false
-
-# API Configuration
-VITE_API_BASE_URL=/api
-
-# Security
-VITE_ENABLE_RATE_LIMITING=true
-VITE_MAX_REQUESTS_PER_MINUTE=60
-
-# Logging
-VITE_LOG_LEVEL=info
-VITE_ENABLE_CONSOLE_LOGGING=true
-```
-
-### Netlify Configuration
-
-The `netlify.toml` file includes:
-
-- **Build settings**: Automated build configuration
-- **SPA routing**: Redirects for client-side routing
-- **Security headers**: XSS protection, content type options
-- **Caching strategy**: Optimized cache headers for static assets
-- **Environment contexts**: Different settings for production/staging
+⚠️ **IMPORTANT**: Change this password immediately after first login!
 
 ## 📁 Project Structure
 
 ```
-enquete-test/
-├── src/
-│   ├── components/      # Reusable UI components
-│   ├── pages/          # Page components
-│   ├── utils/          # Utility functions
-│   ├── hooks/          # Custom React hooks
-│   ├── config/         # Configuration files
-│   └── assets/         # Static assets
-├── public/             # Public static files
-├── backend/           # Backend API (for local development)
-├── netlify/
-│   ├── functions/      # Netlify serverless functions
-│   │   ├── admin.js   # Admin API endpoints
-│   │   ├── surveys.js # Survey API endpoints
-│   │   └── responses.js # Response API endpoints
-│   └── package.json   # Function dependencies
-├── dist/              # Build output (generated)
-├── netlify.toml       # Netlify configuration
-├── package.json       # Project dependencies
-├── vite.config.ts     # Vite configuration
-└── tsconfig.json      # TypeScript configuration
+enquete test/
+├── backend/                 # Node.js backend API
+│   ├── src/
+│   │   ├── controllers/    # API route handlers
+│   │   ├── database/       # Database configuration & migrations
+│   │   ├── middleware/     # Authentication & error handling
+│   │   ├── routes/         # API route definitions
+│   │   ├── types/          # TypeScript type definitions
+│   │   └── server.ts       # Express server setup
+│   ├── package.json
+│   ├── tsconfig.json
+│   └── .env.example
+├── src/                    # React frontend
+│   ├── components/         # Reusable UI components
+│   ├── pages/             # Page components
+│   ├── utils/             # Utility functions & API client
+│   ├── hooks/             # Custom React hooks
+│   └── main.tsx           # App entry point
+├── public/                # Static assets
+├── package.json           # Frontend dependencies
+├── vite.config.ts        # Vite configuration
+├── netlify.toml          # Netlify deployment config
+└── README.md             # This file
 ```
 
-## 🔐 Security Features
+## 🔌 API Endpoints
 
-- **Anonymous Data Collection**: No personal identifiers stored
-- **Session-based Authentication**: Secure admin access
-- **XSS Protection**: Content Security Policy headers
-- **HTTPS Only**: Enforced secure connections
-- **Rate Limiting**: Protection against abuse
+### Authentication
+- `POST /api/admin/login` - Admin login
+- `GET /api/admin` - Get all admins (authenticated)
+- `POST /api/admin` - Create admin (authenticated)
+- `DELETE /api/admin/:id` - Delete admin (authenticated)
+- `PUT /api/admin/:id/password` - Update password (authenticated)
+
+### Surveys
+- `GET /api/surveys` - Get all surveys (authenticated)
+- `GET /api/surveys/latest` - Get latest survey (authenticated)
+- `GET /api/surveys/:id` - Get survey by ID (authenticated)
+- `POST /api/surveys` - Create survey (authenticated)
+- `PUT /api/surveys/:id` - Update survey (authenticated)
+- `DELETE /api/surveys/:id` - Delete survey (authenticated)
+
+### Responses
+- `POST /api/responses` - Submit response (public)
+- `GET /api/responses/check/:surveyId` - Check if user responded (public)
+- `GET /api/responses` - Get all responses (authenticated)
+- `GET /api/responses/survey/:surveyId` - Get survey responses (authenticated)
+- `DELETE /api/responses/:id` - Delete response (authenticated)
+
+### Health Check
+- `GET /health` - Server health check
+
+## 🌐 Deployment
+
+### Build for Production
+
+**Backend:**
+```bash
+cd backend
+npm run build
+npm start
+```
+
+**Frontend:**
+```bash
+npm run build
+# The built files will be in the dist/ directory
+```
+
+### Netlify Deployment
+
+The application includes Netlify configuration for easy deployment:
+
+```bash
+# Install Netlify CLI
+npm install -g netlify-cli
+
+# Build the application
+npm run build
+
+# Deploy to Netlify
+netlify deploy --prod
+```
+
+Configure these environment variables in Netlify:
+- `VITE_API_URL` - Your backend API URL
+- `VITE_APP_MODE` - Set to `production`
 
 ## 📊 Analytics & Reporting
 
@@ -224,36 +263,100 @@ enquete-test/
 - **Components**: Consistent, reusable UI elements
 - **Animations**: Smooth transitions with Framer Motion
 
+## 🔒 Security Features
+
+- **Anonymous Data Collection**: No personal identifiers stored
+- **Session-based Authentication**: Secure admin access
+- **Password Hashing**: Bcrypt for secure password storage
+- **JWT Authentication**: Token-based API authentication
+- **SQL Injection Prevention**: Parameterized queries
+- **CORS Protection**: Configured for trusted domains
+- **Input Validation**: Type-safe with TypeScript
+
 ## 🐛 Troubleshooting
 
 ### Build Issues
 
 ```bash
 # Clear cache and rebuild
-rm -rf node_modules dist
+rm -rf node_modules dist backend/node_modules backend/dist
 npm install
+cd backend && npm install && cd ..
 npm run build
 ```
 
-### Deployment Issues
+### Database Connection Issues
 
-1. **Build fails**: Check Node version matches `netlify.toml`
-2. **Blank pages**: Verify SPA redirects in `netlify.toml`
-3. **Environment variables**: Ensure all required vars are set in Netlify
+- Verify PostgreSQL is running
+- Check credentials in `backend/.env` file
+- Ensure database `enquete_db` exists
+- Check PostgreSQL logs for connection errors
 
-### Local Development Issues
+### Port Already in Use
 
 ```bash
-# Reset local storage
-localStorage.clear()
+# Find process using port 3001
+netstat -ano | findstr :3001
 
-# Check console for errors
-# Open browser DevTools → Console
+# Kill the process (replace PID with actual process ID)
+taskkill /PID <PID> /F
 ```
 
-## 📝 License
+### API Connection Issues
 
-Proprietary - Afriland First Bank Internal Use
+- Verify backend is running on port 3001
+- Check `VITE_API_URL` in frontend `.env` file
+- Check browser console for CORS errors
+- Test backend health: `http://localhost:3001/health`
+
+## 📝 Development Workflow
+
+### Running Both Servers
+
+Open two terminal windows:
+
+**Terminal 1 (Backend):**
+```bash
+cd backend
+npm run dev
+```
+
+**Terminal 2 (Frontend):**
+```bash
+cd "c:\Projects\enquete test"
+npm run dev
+```
+
+### Making Changes
+
+- **Backend changes**: The server will automatically restart with `ts-node-dev`
+- **Frontend changes**: Vite provides hot module replacement
+
+## 🧪 Testing
+
+### Manual Testing Checklist
+
+- [ ] Admin login functionality
+- [ ] Survey creation and management
+- [ ] Response submission
+- [ ] Duplicate response prevention
+- [ ] Analytics dashboard
+- [ ] Export functionality
+- [ ] Responsive design on mobile
+- [ ] Offline mode behavior
+
+## 📈 Performance Optimization
+
+- **Response Caching**: API response caching for improved performance
+- **Code Splitting**: Optimized bundle sizes with Vite
+- **Lazy Loading**: Components loaded on demand
+- **Database Indexing**: Optimized query performance
+- **Asset Optimization**: Minified and compressed static assets
+
+## 🔄 Version History
+
+- **v2.0.0**: Complete rewrite with React + TypeScript + Node.js backend
+- **v1.0.0**: Initial release
 
 ## 👥 Support
 
@@ -261,10 +364,9 @@ For technical support, contact:
 - **IT Department**: Cisco 01411
 - **HR Department**: Contact via internal channels
 
-## 🔄 Version History
+## 📝 License
 
-- **v2.0.0**: Complete rewrite with React + TypeScript
-- **v1.0.0**: Initial release
+Proprietary - Afriland First Bank Internal Use
 
 ---
 
