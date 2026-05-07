@@ -89,7 +89,7 @@ export const Home = () => {
                     className="flex flex-col items-center gap-6"
                 >
                     <Link id="start-survey" to="/repondre" className="btn btn-primary px-8 sm:px-12 py-4 sm:py-6 text-base sm:text-xl group no-underline shadow-2xl shadow-red-500/40">
-                        <Sparkles size={20} sm:size={24} className="text-[#FFD700] animate-pulse" />
+                        <Sparkles size={20} className="text-[#FFD700] animate-pulse" />
                         <span>Participer à l'enquête</span>
                     </Link>
                 </motion.div>
@@ -102,7 +102,7 @@ export const Home = () => {
                     className="mt-8 sm:mt-12"
                 >
                     <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200 shadow-lg">
-                        <Clock size={20} className="text-[#E2001A] animate-pulse sm:size-24" />
+                        <Clock size={20} className="text-[#E2001A] animate-pulse" />
                         <div className="flex items-center gap-2 sm:gap-3">
                             <div className="text-center">
                                 <div className="text-2xl sm:text-3xl font-black text-[#1A1A1A]">{timeRemaining.days}</div>
@@ -139,7 +139,7 @@ export const Home = () => {
                             className="md:col-span-2 card-premium bg-gradient-to-br from-[#1A1A1A] to-[#333] text-white p-6 sm:p-8 md:p-12 overflow-hidden relative group"
                         >
                             <div className="relative z-10">
-                                <Zap className="text-[#FFD700] mb-4 sm:mb-8" size={32} sm:size={48} />
+                                <Zap className="text-[#FFD700] mb-4 sm:mb-8" size={32} />
                                 <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 tracking-tighter">Engagement en Temps Réel</h3>
                                 <p className="text-gray-400 max-w-md text-sm sm:text-base md:text-lg mb-6 sm:mb-8">
                                     Ne perdez plus de temps avec des formulaires papier. Visualisez les tendances
@@ -163,7 +163,7 @@ export const Home = () => {
                             className="card-premium flex flex-col justify-between border-t-4 sm:border-t-8 border-[#FFD700]"
                         >
                             <div>
-                                <ShieldCheck className="text-[#E2001A] mb-4 sm:mb-6" size={28} sm:size={40} />
+                                <ShieldCheck className="text-[#E2001A] mb-4 sm:mb-6" size={28} />
                                 <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 tracking-tight">Anonymat Absolu</h3>
                                 <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
                                     Le secret de votre participation est protégé par un système de clés
@@ -176,13 +176,13 @@ export const Home = () => {
                         </motion.div>
 
                         <FeatureCard
-                            icon={<Star className="text-[#E2001A]" size={24} sm:size={32} />}
+                            icon={<Star className="text-[#E2001A]" size={24} />}
                             title="Index de Satisfaction"
                             description="Une mesure scientifique basée sur 12 leviers d'engagement reconnus internationalement."
                             delay={0.1}
                         />
                         <FeatureCard
-                            icon={<Users className="text-[#E2001A]" size={24} sm:size={32} />}
+                            icon={<Users className="text-[#E2001A]" size={24} />}
                             title="Collaboration Agile"
                             description="Transformez les critiques en opportunités grâce à nos modules de feedback croisés."
                             delay={0.2}
@@ -190,7 +190,7 @@ export const Home = () => {
 
                         <Link to="/creer" className="no-underline group">
                             <FeatureCard
-                                icon={<Edit3 className="text-[#E2001A]" size={24} sm:size={32} />}
+                                icon={<Edit3 className="text-[#E2001A]" size={24} />}
                                 title="Créer une Enquête"
                                 description="Configurez de nouveaux sondages personnalisés pour vos équipes en quelques secondes."
                                 delay={0.3}

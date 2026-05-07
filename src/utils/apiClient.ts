@@ -1,7 +1,7 @@
 // API Client for Backend Communication
-// This handles all HTTP requests to Netlify Functions
+// This handles all HTTP requests to Railway backend API
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/.netlify/functions';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 class ApiClient {
   private baseUrl: string;
