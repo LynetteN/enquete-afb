@@ -6,6 +6,7 @@ import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 import surveyRoutes from './routes/surveyRoutes';
 import responseRoutes from './routes/responseRoutes';
 import adminRoutes from './routes/adminRoutes';
+import setupRoutes from './routes/setupRoutes';
 
 dotenv.config();
 
@@ -40,6 +41,7 @@ app.get('/health', (_req, res) => {
 });
 
 // API Routes
+app.use('/api/setup', setupRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/surveys', surveyRoutes);
 app.use('/api/responses', responseRoutes);
