@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: enquete-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-123456}
+      POSTGRES_DB: enquete_db
+      # Security: Disable remote connections to internal database
+      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    networks:
+      - enquete-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d enquete_db"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    # Security: Resource limits to prevent DoS
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    # Security: Read-only root filesystem (except for data volume)
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/run/postgresql
+    # Security: Drop all capabilities except essential ones
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+    # Security: Run as non-root user (postgres image does this by default)
+    user: "999:999"
+    # Security: No privileged mode
+    privileged: false
+    # Security: Custom security options
+    security_opt:
+      - no-new-privileges:true
+      - apparmor:docker-default
+    # Security: Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  enquete-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16

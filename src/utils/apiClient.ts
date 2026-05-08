@@ -1,5 +1,5 @@
 // API Client for Backend Communication
-// This handles all HTTP requests to Railway backend API
+// This handles all HTTP requests to backend API
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
