@@ -57,6 +57,7 @@
 # Environment variables (can also be set in Netlify dashboard)
 [context.production.environment]
   VITE_APP_MODE = "production"
+  VITE_API_URL = "http://localhost:3001/api"
   VITE_ENABLE_SHAREPOINT_SYNC = "true"
   VITE_ENABLE_OFFLINE_MODE = "true"
   VITE_ENABLE_DIAGNOSTICS = "false"
